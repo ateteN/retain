@@ -1,3 +1,4 @@
+import { authenticate } from './middleware/auth';
 import express, { Application } from 'express';
 import cors from 'cors';
 import authRoutes from './routes/authRoutes';
