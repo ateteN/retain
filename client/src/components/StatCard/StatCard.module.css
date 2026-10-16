@@ -1,0 +1,138 @@
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 22px 24px;
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconWrap {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.iconWrap svg {
+  width: 14px;
+  height: 14px;
+}
+
+.label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+
+.infoIcon {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.infoIcon:hover {
+  color: #ffffff;
+}
+
+.valueRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.badgeWrap {
+  display: flex;
+  align-items: center;
+}
+
+.footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.subtext {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.percentText {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* tick meter */
+.tickTrack {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  width: 100%;
+  height: 14px;
+}
+
+.tick {
+  flex: 1;
+  height: 100%;
+  background-color: var(--tick-inactive);
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+}
+
+.activeTick {
+  background-color: #ffffff;
+}
+
+/* Variants */
+.primary .activeTick {
+  background-color: var(--primary);
+}
+
+.success .activeTick {
+  background-color: var(--primary);
+}
+
+.warning .activeTick {
+  background-color: var(--warning);
+}
+
+.danger .activeTick {
+  background-color: var(--danger);
+}
