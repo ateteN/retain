@@ -1,0 +1,61 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-default);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+.label {
+  line-height: 1;
+}
+
+.card {
+  border-color: rgba(0, 229, 153, 0.25);
+  color: #00e599;
+}
+.card .icon {
+  color: #00e599;
+}
+
+.cash {
+  border-color: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+}
+.cash .icon {
+  color: #fbbf24;
+}
+
+.mobile_money {
+  border-color: rgba(0, 224, 255, 0.25);
+  color: #00e0ff;
+}
+.mobile_money .icon {
+  color: #00e0ff;
+}
+
+.bank_transfer {
+  border-color: rgba(168, 85, 247, 0.25);
+  color: #c084fc;
+}
+.bank_transfer .icon {
+  color: #c084fc;
+}
+
+.other {
+  border-color: var(--border-default);
+  color: var(--text-secondary);
+}
