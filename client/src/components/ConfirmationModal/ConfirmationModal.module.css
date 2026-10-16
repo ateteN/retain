@@ -1,0 +1,136 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(8, 7, 20, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-xl);
+  padding: 28px 32px;
+  max-width: 440px;
+  width: 100%;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--border-default);
+  animation: scaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.iconWrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dangerIcon {
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid var(--danger-border);
+}
+
+.infoIcon {
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--success-border);
+}
+
+.title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.message {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.cancelBtn {
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-default);
+  transition: all var(--transition-fast);
+}
+
+.cancelBtn:hover:not(:disabled) {
+  background-color: var(--bg-elevated);
+  color: #ffffff;
+}
+
+.confirmBtn {
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all var(--transition-fast);
+}
+
+.dangerBtn {
+  background-color: var(--danger);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(255, 107, 74, 0.35);
+}
+
+.dangerBtn:hover:not(:disabled) {
+  background-color: #f87171;
+}
+
+.primaryBtn {
+  background: var(--primary-gradient);
+  color: #0e0d1e;
+}
+
+.primaryBtn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.cancelBtn:disabled,
+.confirmBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
