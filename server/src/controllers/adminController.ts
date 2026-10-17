@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 import Expense from '../models/Expense';
-import Category from '../models/Category';
+import Category, { ICategory } from '../models/Category';
 
 export async function getAdminInsights(_req: Request, res: Response): Promise<void> {
   const now = new Date();
@@ -21,11 +21,11 @@ export async function getAdminInsights(_req: Request, res: Response): Promise<vo
 
   const totalExpenseValue = allExpenses.reduce((sum, e) => sum + e.amount, 0);
 
-  // Spending + usage count per category, in one pass over allExpenses
+  // Spending and usage count 
   const spendMap = new Map<string, number>();
   const countMap = new Map<string, number>();
   for (const e of allExpenses) {
-    const catId = (e.category as any)?._id?.toString() ?? 'unknown';
+    const catId = (e.category as unknown as ICategory)?._id?.toString() ?? 'unknown';
     spendMap.set(catId, (spendMap.get(catId) ?? 0) + e.amount);
     countMap.set(catId, (countMap.get(catId) ?? 0) + 1);
   }

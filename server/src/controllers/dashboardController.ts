@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Expense from '../models/Expense';
 import Budget from '../models/Budget';
 import { normalizeToMonth, startOfNextMonth } from '../utils/date';
+import { ICategory } from '../models/Category';
 
 export async function getUserDashboard(req: Request, res: Response): Promise<void> {
   const userId = req.user!.userId;
@@ -22,7 +23,7 @@ export async function getUserDashboard(req: Request, res: Response): Promise<voi
   // Group spending by category name
   const byCategory = new Map<string, number>();
   for (const e of monthExpenses) {
-    const catName = (e.category as any)?.name ?? 'Unknown';
+    const catName = (e.category as unknown as ICategory)?.name ?? 'Unknown';
     byCategory.set(catName, (byCategory.get(catName) ?? 0) + e.amount);
   }
   const spendingByCategory = Array.from(byCategory.entries())
