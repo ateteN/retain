@@ -1,12 +1,22 @@
 import mongoose from 'mongoose';
 
-export async function connectDB(): Promise<void> {
-  const uri = process.env.MONGODB_URI;
+let cachedConnection: typeof mongoose | null = null;
+let connectionPromise: Promise<typeof mongoose> | null = null;
 
-  if (!uri) {
-    throw new Error('MONGODB_URI is not set in your .env file');
+export async function connectDB(): Promise<void> {
+  if (cachedConnection) {
+    return;
   }
 
-  await mongoose.connect(uri);
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error('MONGODB_URI is not set in your environment variables');
+  }
+
+  if (!connectionPromise) {
+    connectionPromise = mongoose.connect(uri);
+  }
+
+  cachedConnection = await connectionPromise;
   console.log('MongoDB connected successfully');
 }

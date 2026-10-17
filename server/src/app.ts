@@ -1,3 +1,4 @@
+import { connectDB } from './config/db';
 import { authenticate } from './middleware/auth';
 import express, { Application } from 'express';
 import cors from 'cors';
@@ -12,6 +13,16 @@ const app: Application = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('Database connection failed:', err);
+    res.status(500).json({ message: 'Database connection failed.' });
+  }
+});
 
 app.get('/api/health', (_req, res) => {
   res.status(200).json({ status: 'ok', message: 'Retain API is alive' });
