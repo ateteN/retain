@@ -1,16 +1,15 @@
 import { Router } from 'express';
 import { listExpenses, getExpense, createExpense, updateExpense, deleteExpense } from '../controllers/expenseController';
 import { authenticate } from '../middleware/auth';
+import { asyncHandler } from '../utils/asyncHandler';
 
 const router = Router();
 router.use(authenticate);
 
-const wrap = (fn: any) => (req: any, res: any, next: any) => fn(req, res).catch(next);
-
-router.get('/', wrap(listExpenses));
-router.get('/:id', wrap(getExpense));
-router.post('/', wrap(createExpense));
-router.put('/:id', wrap(updateExpense));
-router.delete('/:id', wrap(deleteExpense));
+router.get('/', asyncHandler(listExpenses));
+router.get('/:id', asyncHandler(getExpense));
+router.post('/', asyncHandler(createExpense));
+router.put('/:id', asyncHandler(updateExpense));
+router.delete('/:id', asyncHandler(deleteExpense));
 
 export default router;
