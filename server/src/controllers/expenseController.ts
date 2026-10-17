@@ -1,19 +1,31 @@
 import { Request, Response } from 'express';
-import Expense from '../models/Expense';
+import Expense, { PaymentMethod } from '../models/Expense';
 import { getOrCreateUncategorized } from './categoryController';
+
+interface ExpenseFilter {
+  user: string;
+  title?: { $regex: string; $options: string };
+  category?: string;
+  paymentMethod?: PaymentMethod;
+  date?: { $gte?: Date; $lte?: Date };
+}
 
 export async function listExpenses(req: Request, res: Response): Promise<void> {
   const userId = req.user!.userId;
   const { search, category, paymentMethod, startDate, endDate, sortBy = 'date', sortOrder = 'desc', page = '1', pageSize = '10' } = req.query as Record<string, string>;
 
-  const filter: any = { user: userId };
+  const filter: ExpenseFilter = { user: userId };
   if (search) filter.title = { $regex: search, $options: 'i' };
   if (category) filter.category = category;
-  if (paymentMethod) filter.paymentMethod = paymentMethod;
+  if (paymentMethod) filter.paymentMethod = paymentMethod as PaymentMethod;
   if (startDate || endDate) {
     filter.date = {};
     if (startDate) filter.date.$gte = new Date(startDate);
-    if (endDate) filter.date.$lte = new Date(endDate);
+    if (endDate) {
+      const endOfDay = new Date(endDate);
+      endOfDay.setUTCHours(23, 59, 59, 999);
+      filter.date.$lte = endOfDay;
+    }
   }
 
   const sortField = sortBy === 'amount' ? 'amount' : 'date';
@@ -53,6 +65,11 @@ export async function createExpense(req: Request, res: Response): Promise<void> 
     return;
   }
 
+  if (typeof amount !== 'number' || amount <= 0) {
+    res.status(400).json({ message: 'Amount must be a positive number.' });
+    return;
+  }
+
   const resolvedCategory = categoryId || (await getOrCreateUncategorized())._id;
 
   const expense = await Expense.create({
@@ -74,7 +91,13 @@ export async function updateExpense(req: Request, res: Response): Promise<void> 
 
   const { title, amount, date, paymentMethod, notes, categoryId } = req.body;
   if (title !== undefined) expense.title = title;
-  if (amount !== undefined) expense.amount = amount;
+  if (amount !== undefined) {
+    if (typeof amount !== 'number' || amount <= 0) {
+      res.status(400).json({ message: 'Amount must be a positive number.' });
+      return;
+    }
+    expense.amount = amount;
+  }
   if (date !== undefined) expense.date = new Date(date);
   if (paymentMethod !== undefined) expense.paymentMethod = paymentMethod;
   if (notes !== undefined) expense.notes = notes;

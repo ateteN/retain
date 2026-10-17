@@ -1,13 +1,12 @@
 import { Router } from 'express';
 import { setBudget, getBudgetStatus } from '../controllers/budgetController';
 import { authenticate } from '../middleware/auth';
+import { asyncHandler } from '../utils/asyncHandler';
 
 const router = Router();
 router.use(authenticate);
 
-const wrap = (fn: any) => (req: any, res: any, next: any) => fn(req, res).catch(next);
-
-router.get('/status', wrap(getBudgetStatus));
-router.put('/', wrap(setBudget));
+router.get('/status', asyncHandler(getBudgetStatus));
+router.put('/', asyncHandler(setBudget));
 
 export default router;
